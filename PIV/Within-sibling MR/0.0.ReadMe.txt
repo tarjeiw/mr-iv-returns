@@ -1,0 +1,58 @@
+#Within-sibling EA GWAS  with help of Howe et al within-sibling GWAS pipeline 
+
+# 2.1_FormatSiblings.R
+Get full siblings from KING 
+# 2.2_updatePLNKfam.R
+updates the plink file to have the correct fam id (shared by siblings)
+all save of alternative plink files is done in Perline's folder (to be sure ill remember to delete them as they take a lot of space + make sure nobody use them by mistake)
+
+#A.Get_EA.R 
+gets the EA phenotypes (in the whole pop)
+- definition of EA following Okbay et al, used for main analyses 
+- definition of EA following Norwegian system, for extra checks
+- bonus checks of changes of EA between 25 and 30 years old. 
+
+# B.Identifysamples.R 
+Make the phenotype files 
+Identify sibligns with phenotype and identify their unrelated participants 
+
+# C.1.makecovfile.R 
+create cov file for the sample of sib with ea 
+
+# C.2.subsetplink.R 
+subset the plink file to only the siblings we are using in the gwas, to make it more manageable 
+
+module load PLINK/1.90b_6.2-x86_64
+module load R-bundle-Bioconductor/3.18-foss-2023a-R-4.3.2
+
+./1.0_setup.sh config
+./1.0_setup.sh requirements
+#./1.0_setup.sh genetics
+./1.0_setup.sh covariates # i define covariates differently 
+./1.0_setup.sh phenotypes
+
+# C.3.cleangenetics.bash 
+run itneractively 
+reformat the genetic file, it seemed to have been the problem! 
+
+./3.0_partitions.sh
+#creates 1397 partitions 
+
+sbatch 4.0_all_batches.sh
+
+./5.0_tidy.sh Education
+
+D.h2_all_gwas.R
+E.get_piv_wf_std.R: get piv for the gwas, 
+
+
+# To re-run the within-sibling GWAS pipeline with different definition of pheno
+1. Change the name of the pheno file in the config file and the name of the outcome in 04
+2. run: 
+module load R-bundle-Bioconductor/3.18-foss-2023a-R-4.3.2
+./1.0_setup.sh phenotype #to check the phenotype
+sbatch 4.0_all_batches.sh 
+./5.0_tidy.sh PHENOname
+
+Done with Education, Education_std
+

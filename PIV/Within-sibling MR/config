@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# General details
+
+# Please make sure this is alphanumeric (underscores allowed but no spaces)
+study_name="MobaEQOP"
+
+# Analyst's name
+analyst_name="Perline Demange"
+
+# Analyst's email address
+analyst_email="perlined@uio.no"
+
+# Please put the full path to this directory
+# e.g. if the config file path is "/home/Projects/SiblingGWAS/config" 
+#then home_directory="/home/Projects/SiblingGWAS"
+
+home_directory="/ess/p805/data/durable/projects/EQOP/MR_Income/WithinsibGWAS"
+bfile_raw="/ess/p805/data/durable/projects/Perline/TEMP_GENDATA_withinsibGWAS/subset_plink_siblings_filtered_nodup"
+covariates="SIBEA.cov"
+phenotypes="SIBEA_std.pheno"
+
+# Imputation quality scores
+# This should be a file with three columns, SNP, MAF and quality scores
+quality_scores="data_filtered.info"
+
+# Splitting data-set into chunks of e.g. 100,000 SNPs to run in batch
+chunks_snp_number="5000"
+
+# DO NOT MODIFY
+
+source ${home_directory}/resources/parameters
